@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "@builder.io/qwik",
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "outDir": "tmp",
+    "noEmit": true,
+    "types": ["node", "vite/client"],
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "files": ["./src/global.d.ts"],
+  "include": ["src", "adapters", "vite.config.ts"]
+}

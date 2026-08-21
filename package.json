@@ -1,0 +1,32 @@
+{
+  "name": "ocsimplesite",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "qwik build",
+    "build.client": "vite build",
+    "build.server": "vite build -c adapters/static/vite.config.ts",
+    "build.types": "tsc --incremental --noEmit",
+    "dev": "vite --mode ssr",
+    "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
+    "preview": "qwik build preview && vite preview --open",
+    "start": "vite --open --mode ssr",
+    "qwik": "qwik"
+  },
+  "devDependencies": {
+    "@builder.io/qwik": "^1.20.0",
+    "@builder.io/qwik-city": "^1.20.0",
+    "@types/node": "^22.10.0",
+    "autoprefixer": "^10.4.20",
+    "ignore": "^7.0.6",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.6.0",
+    "vite": "^7.3.6",
+    "vite-tsconfig-paths": "^6.1.1"
+  },
+  "engines": {
+    "node": ">=18.11"
+  }
+}

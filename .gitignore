@@ -1,0 +1,8 @@
+node_modules/
+dist/
+tmp/
+build/
+server/
+.qwik/
+*.log
+.DS_Store
