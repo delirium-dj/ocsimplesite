@@ -1,5 +1,8 @@
 # Plan: QwikJS + Tailwind 3 Website
 
+> **Status / implementation log:** see [PROGRESS.md](./PROGRESS.md) for what was built,
+> how the theme system works, and run/gotchas notes.
+
 ## Goal
 A super-sick, simple marketing site with:
 - **Homepage** (`/`)
