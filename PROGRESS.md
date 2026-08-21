@@ -54,7 +54,7 @@ ocsimplesite/
    │  │  ├─ theme-script.ts            # inline no-flash bootstrap (string)
    │  │  └─ theme-toggle.tsx           # sun/moon toggle button
    │  ├─ layout/
-   │  │  ├─ header.tsx                 # sticky nav + ThemeToggle
+   │  │  ├─ header.tsx                 # sticky nav + ThemeToggle + mobile hamburger overlay
    │  │  └─ footer.tsx
    │  └─ ui/
    │     ├─ container.tsx              # max-w-6xl centered wrapper
@@ -130,6 +130,15 @@ Logic:
 Shared UI: `Container` (centered max-width wrapper) and `Button` (primary gradient /
 ghost outline) keep the look consistent.
 
+- **Responsive header** (`src/components/layout/header.tsx`): on `md+` (tablet/desktop)
+  the inline nav + `ThemeToggle` show. Below `md` (phones/small tablets) those hide and a
+  **hamburger button** (`md:hidden`) appears. Clicking it opens a **full-screen overlay**
+  (`fixed inset-0 z-[60] bg-slate-50/80 backdrop-blur-md dark:bg-slate-950/80`) that blurs
+  the page behind and centers the nav links + `ThemeToggle`. The overlay is driven by a
+  `useSignal(false)` `open` state; it auto-closes on any link/close-button click and the
+  hamburger icon swaps to an X. When closed it stays in the DOM as `pointer-events-none
+  opacity-0` (still `md:hidden`) so it never blocks the page.
+
 ---
 
 ## 5. How to run
@@ -159,6 +168,13 @@ npm run preview    # serve the built static site
 6. **Contact form is demo-only under the static adapter.** For real email sending you
    need a server adapter (e.g. `adapters/node` / express) or a third-party API call
    inside `useContactAction`.
+8. **`backdrop-filter` collapses `fixed` overlays (header hamburger bug).** A `fixed`
+   element is positioned relative to the nearest ancestor that has `transform`,
+   `filter`, `backdrop-filter`, `perspective`, `contain`, or `will-change`. The header
+   uses `backdrop-blur-lg` (= `backdrop-filter`), so the full-screen mobile menu
+   overlay **must not be a child of `<header>`** — otherwise it gets contained by the
+   header box (~64px tall) and won't cover/blur the page or center its links. Keep the
+   overlay a **sibling of `<header>`** (see `src/components/layout/header.tsx`).
 7. **Qwik JSX attribute/casing gotchas (learned on the contact info section):**
    - `<iframe>` `referrerpolicy` must be camelCase **`referrerPolicy`** in Qwik's JSX
      types (or just omit it). Lowercase `referrerpolicy` fails the type check.
@@ -180,4 +196,4 @@ npm run preview    # serve the built static site
 
 ---
 
-_Last updated: added contact info + Google Maps section to `/contact`; build + SSG verified._
+_Last updated: fixed mobile menu overlay collapse (backdrop-filter containing-block bug); build + SSG verified._
