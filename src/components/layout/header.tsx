@@ -21,7 +21,10 @@ export const Header = component$(() => {
             onClick$={() => (open.value = false)}
             class="flex items-center gap-2 text-base font-bold tracking-tight"
           >
-            <span class="inline-block h-7 w-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500" />
+            <span class="relative inline-flex h-7 w-7 items-center justify-center">
+              <span class="absolute inset-0 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500" />
+              <img src="/favicon.svg" alt="" width="28" height="28" class="relative rounded-lg" />
+            </span>
             <span>ocsimplesite</span>
           </Link>
 
@@ -91,7 +94,10 @@ export const Header = component$(() => {
             onClick$={() => (open.value = false)}
             class="flex items-center gap-2 text-base font-bold tracking-tight"
           >
-            <span class="inline-block h-7 w-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500" />
+            <span class="relative inline-flex h-7 w-7 items-center justify-center">
+              <span class="absolute inset-0 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500" />
+              <img src="/favicon.svg" alt="" width="28" height="28" class="relative rounded-lg" />
+            </span>
             <span>ocsimplesite</span>
           </Link>
           <button

@@ -26,11 +26,11 @@ export default component$(() => {
 
   return (
     <Container class="py-20">
-      <div class="mx-auto max-w-xl">
-        <h1 class="bg-gradient-to-br from-slate-900 to-slate-600 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl dark:from-white dark:to-slate-400">
+      <div class="mx-auto max-w-4xl">
+        <h1 class="bg-gradient-to-br from-slate-900 to-slate-600 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl dark:from-white dark:to-slate-400 text-center">
           Contact us
         </h1>
-        <p class="mt-4 text-slate-600 dark:text-slate-300">
+        <p class="mt-4 text-slate-600 dark:text-slate-300 text-center">
           Have a question or a project in mind? Drop us a line and we’ll get back
           to you.
         </p>
@@ -74,14 +74,16 @@ export default component$(() => {
                 <p class="mt-1.5 text-sm text-rose-500">{action.value.errors.message}</p>
               )}
             </div>
-            <Button>Send message</Button>
+             <div class="flex justify-center">
+               <Button>Send message</Button>
+             </div>
           </Form>
         )}
       </div>
 
-      <div class="mt-16 grid gap-8 lg:grid-cols-2">
+      <div class="mt-16 space-y-8 max-w-4xl mx-auto">
         {/* Google Maps window (no API key needed via output=embed) */}
-        <div class="h-72 overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 lg:h-auto">
+        <div class="h-80 overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 sm:h-96 lg:h-[28rem]">
           <iframe
             title="Our location — 355 Template Street, San Francisco"
             src="https://www.google.com/maps?q=355+Template+Street+San+Francisco+California+94110&output=embed"
@@ -110,8 +112,8 @@ export default component$(() => {
             }
             title="Contact us"
             lines={[
-              <a href="tel:+19178107553" class="transition-colors hover:text-indigo-500">+1 (917) 810 7553</a>,
-              <a href="mailto:your.email@example.com" class="transition-colors hover:text-indigo-500">your.email@example.com</a>,
+              <a href="tel:+19178107553" class="transition-colors hover:text-indigo-400">+1 (917) 810 7553</a>,
+              <a href="mailto:your.email@example.com" class="transition-colors hover:text-indigo-400">your.email@example.com</a>,
             ]}
           />
 
@@ -123,18 +125,18 @@ export default component$(() => {
               </svg>
             }
             title="Working hours"
-            lines={['Available to you', '24/7']}
+            lines={['Available to you', '24/7 via email']}
           />
 
           <div class="rounded-2xl border border-slate-200 bg-white/60 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
-            <div class="flex items-center gap-3 text-slate-700 dark:text-slate-200">
+            <div class="flex items-center justify-center gap-3 text-slate-700 dark:text-slate-200">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
                 <path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z" />
                 <path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" />
               </svg>
               <h3 class="text-sm font-semibold uppercase tracking-wide">Follow us</h3>
             </div>
-            <div class="mt-4 flex items-center gap-3">
+            <div class="mt-4 flex items-center justify-center gap-3">
               <SocialLink href="https://www.linkedin.com" label="LinkedIn">
                 <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
                   <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97V21H9z" />
@@ -145,9 +147,14 @@ export default component$(() => {
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </SocialLink>
-              <SocialLink href="https://www.instagram.com" label="Instagram">
+              <SocialLink href="https://www.facebook.com" label="Facebook">
                 <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
-                  <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.8c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.41-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.17.42-.36 1.04-.41 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.41 2.19.21.55.47.94.88 1.35.41.41.8.67 1.35.88.42.17 1.04.36 2.19.41 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.41.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.17-.42.36-1.04.41-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.41-2.19a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.42-.17-1.04-.36-2.19-.41-1.24-.06-1.61-.07-4.76-.07zm0 3.06a4.98 4.98 0 1 1 0 9.96 4.98 4.98 0 0 1 0-9.96zm0 1.8a3.18 3.18 0 1 0 0 6.36 3.18 3.18 0 0 0 0-6.36zm5.2-2.15a1.16 1.16 0 1 1 0 2.32 1.16 1.16 0 0 1 0-2.32z" />
+                  <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647z" />
+                </svg>
+              </SocialLink>
+              <SocialLink href="https://www.tiktok.com" label="TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
                 </svg>
               </SocialLink>
             </div>
@@ -167,11 +174,11 @@ interface InfoCardProps {
 const InfoCard = component$<InfoCardProps>(({ icon, title, lines }) => {
   return (
     <div class="rounded-2xl border border-slate-200 bg-white/60 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
-      <div class="flex items-center gap-3 text-slate-700 dark:text-slate-200">
+      <div class="flex items-center justify-center gap-3 text-slate-700 dark:text-slate-200">
         {icon}
         <h3 class="text-sm font-semibold uppercase tracking-wide">{title}</h3>
       </div>
-      <div class="mt-3 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+      <div class="mt-3 space-y-1 text-center text-sm text-slate-600 dark:text-slate-300">
         {lines.map((line, i) => (
           <p key={i}>{line}</p>
         ))}
