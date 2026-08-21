@@ -17,7 +17,7 @@ AI session can pick up where this left off without re-deriving anything.
 | Project scaffold (Qwik + QwikCity + Tailwind 3) | ✅ Done |
 | Homepage `/` | ✅ Done |
 | Who We Are `/who-we-are` | ✅ Done |
-| Contact `/contact` (validating form) | ✅ Done |
+| Contact `/contact` (validating form + info/map section) | ✅ Done |
 | Automatic + manual dark/light theme | ✅ Done |
 | `npm install` | ✅ Done |
 | `npm run build` (SSG, 3 pages) | ✅ Done + type-checks |
@@ -116,9 +116,16 @@ Logic:
   a contact CTA card.
 - **Contact** (`src/routes/contact/index.tsx`): a `Form` backed by `routeAction$`
   (`useContactAction`) with client-side validation (name ≥ 2, valid email regex,
-  message ≥ 10 chars). On success it shows a thank-you panel. Note: with the **static**
-  adapter there is no live server, so the action only runs in `dev`; swap to a
-  node/express adapter (or wire an email API) for real submissions in production.
+  message ≥ 10 chars). On success it shows a thank-you panel. Below the form is a
+  two-column section: a **Google Maps iframe** (`output=embed`, no API key needed,
+  address `355 Template Street, San Francisco, California 94110`) on the left, and on
+  the right a 2-col grid of info cards — **Address**, **Contact us** (tel/mailto links),
+  **Working hours** (24/7), and **Follow us** (LinkedIn / X / Instagram SVG icon links).
+  Two local components were added in this file: `InfoCard` (icon + title + lines) and
+  `SocialLink` (uses `<Slot />` for the icon — do NOT type `children` in props; see §6).
+  Note: with the **static** adapter there is no live server, so the form action only
+  runs in `dev`; swap to a node/express adapter (or wire an email API) for real
+  submissions in production.
 
 Shared UI: `Container` (centered max-width wrapper) and `Button` (primary gradient /
 ghost outline) keep the look consistent.
@@ -152,6 +159,13 @@ npm run preview    # serve the built static site
 6. **Contact form is demo-only under the static adapter.** For real email sending you
    need a server adapter (e.g. `adapters/node` / express) or a third-party API call
    inside `useContactAction`.
+7. **Qwik JSX attribute/casing gotchas (learned on the contact info section):**
+   - `<iframe>` `referrerpolicy` must be camelCase **`referrerPolicy`** in Qwik's JSX
+     types (or just omit it). Lowercase `referrerpolicy` fails the type check.
+   - A component that renders passed-in children must use `<Slot />` and **not** declare
+     `children` in its Props interface — typing `children` as `any` triggers a
+     "children prop expects type 'never'" error. (See `SocialLink` in
+     `src/routes/contact/index.tsx`.)
 
 ---
 
@@ -166,4 +180,4 @@ npm run preview    # serve the built static site
 
 ---
 
-_Last updated: implementation complete; build + dev verified._
+_Last updated: added contact info + Google Maps section to `/contact`; build + SSG verified._
