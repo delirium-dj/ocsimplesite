@@ -19,9 +19,12 @@ AI session can pick up where this left off without re-deriving anything.
 | Who We Are `/who-we-are` | ✅ Done |
 | Contact `/contact` (validating form + info/map section) | ✅ Done |
 | Automatic + manual dark/light theme | ✅ Done |
+| Responsive hamburger + blurred overlay menu | ✅ Done |
+| 404 not-found page | ✅ Done |
 | `npm install` | ✅ Done |
-| `npm run build` (SSG, 3 pages) | ✅ Done + type-checks |
+| `npm run build` (SSG, 4 pages) | ✅ Done + type-checks |
 | `npm run dev` boots clean | ✅ Done |
+| `npm run preview` (build + static serve `dist/`) | ✅ Done |
 
 **One known workaround:** we had to add `ignore` as a devDependency because the
 `@builder.io/qwik` CLI 1.20 is missing it as a transitive dep (see §6).
@@ -61,9 +64,11 @@ ocsimplesite/
    │     └─ button.tsx                 # primary/ghost CTA
    └─ routes/
       ├─ layout.tsx                # wraps ALL routes with Header+Footer
-      ├─ index.tsx                 # Homepage
-      ├─ who-we-are/index.tsx      # Who We Are
-      └─ contact/index.tsx         # Contact Us (routeAction$ form)
+       ├─ index.tsx                 # Homepage
+       ├─ who-we-are/index.tsx      # Who We Are
+        ├─ contact/index.tsx         # Contact Us (routeAction$ form)
+        ├─ 404.tsx                   # Static not-found page -> emitted as dist/404.html
+        └─ [...404]/index.tsx        # Catch-all: branded 404 for ANY unmatched path (dev/preview)
 ```
 
 Routing is **file-based** via QwikCity. `routes/layout.tsx` automatically wraps every
@@ -125,7 +130,17 @@ Logic:
   `SocialLink` (uses `<Slot />` for the icon — do NOT type `children` in props; see §6).
   Note: with the **static** adapter there is no live server, so the form action only
   runs in `dev`; swap to a node/express adapter (or wire an email API) for real
-  submissions in production.
+   submissions in production.
+
+- **404** (`src/routes/404.tsx`): a centered not-found page (gradient "404", message,
+  "Back to home" `Button`). QwikCity uses it **only to emit `dist/404.html`** for the
+  static build (the fallback a real host serves for unknown paths). It inherits the global
+  `Header`/`Footer` from `routes/layout.tsx`, so the theme toggle and nav work here too.
+- **Catch-all 404** (`src/routes/[...404]/index.tsx`): a *second* copy of the same branded
+  page. QwikCity deliberately hides `404.tsx` in **dev/preview** and shows its own
+  "Available Routes" page instead — so this catch-all route exists to render the custom 404
+  for unmatched paths (e.g. `/pricing`, `/about`) while developing. Its `routeLoader$` calls
+  `event.status(404)` so the HTTP status is correct.
 
 Shared UI: `Container` (centered max-width wrapper) and `Button` (primary gradient /
 ghost outline) keep the look consistent.
@@ -147,7 +162,7 @@ ghost outline) keep the look consistent.
 npm install        # first time only (also installs the `ignore` workaround, see §6)
 npm run dev        # dev server at http://localhost:5173  (vite --mode ssr)
 npm run build      # SSG -> dist/ (also runs tsc type-check)
-npm run preview    # serve the built static site
+npm run preview    # build, then statically serve dist/ (shows custom 404.html for unknown routes)
 ```
 
 ---
@@ -178,10 +193,24 @@ npm run preview    # serve the built static site
 7. **Qwik JSX attribute/casing gotchas (learned on the contact info section):**
    - `<iframe>` `referrerpolicy` must be camelCase **`referrerPolicy`** in Qwik's JSX
      types (or just omit it). Lowercase `referrerpolicy` fails the type check.
-   - A component that renders passed-in children must use `<Slot />` and **not** declare
-     `children` in its Props interface — typing `children` as `any` triggers a
-     "children prop expects type 'never'" error. (See `SocialLink` in
-     `src/routes/contact/index.tsx`.)
+  - A component that renders passed-in children must use `<Slot />` and **not** declare
+      `children` in its Props interface — typing `children` as `any` triggers a
+      "children prop expects type 'never'" error. (See `SocialLink` in
+      `src/routes/contact/index.tsx`.)
+    - **Set status via `event.status(404)`**, NOT an imported `status` helper — there is no
+      `status` export from `@builder.io/qwik-city` in 1.20; the `RequestEvent` passed to
+      `routeLoader$` has the `.status()` method instead.
+ 9. **Custom 404 is NOT shown in `dev`/`preview` by QwikCity design.** The dedicated
+    `404.tsx` is only used to emit the static `dist/404.html` (for production hosts); in dev
+    QwikCity shows its own "Available Routes" page for unmatched routes. To see the branded
+    404 locally use either:
+    - `npm run dev` then visit any made-up path (the catch-all `[...404]` route renders it), or
+    - `npm run preview` (build + `npx serve dist`) then visit e.g. `/pricing` — `serve` returns
+      the custom `404.html` (note: `serve` sends HTTP 200 for unknown routes; a real host such
+      as Netlify/Vercel/Cloudflare Pages serves `404.html` with a proper 404 status).
+    The original `preview` script (`qwik build preview && vite preview`) was changed to
+    `npm run build && npx serve dist` because the static adapter has no `build.preview`/`build.static`
+    script and `vite preview` won't fall back to `404.html` for clean URLs.
 
 ---
 
@@ -192,8 +221,7 @@ npm run preview    # serve the built static site
 - Add per-route `DocumentHead` OG/Twitter tags (the `head` export already exists on each
   page — extend it).
 - Deploy `dist/` to Netlify / Vercel / Cloudflare Pages (static).
-- Add a `404.tsx` route for not-found handling.
 
 ---
 
-_Last updated: fixed mobile menu overlay collapse (backdrop-filter containing-block bug); build + SSG verified._
+_Last updated: added `[...404]` catch-all route so the branded 404 shows in dev/preview; repurposed `npm run preview` to `npm run build && npx serve dist` (the static adapter has no `build.preview` script); build generates 4 pages incl. `dist/404.html`, type-check verified._
